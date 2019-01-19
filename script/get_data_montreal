@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+filename='liste_url.txt'
+declare -a liste_url
+n=0
+while read line; do
+# reading each line
+liste_url+=$line
+wget $line
+n=$((n+1))
+done < $filename
