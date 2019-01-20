@@ -3,10 +3,10 @@ var obj = {
     features: []
 };
 
-const zoneSize = 10;
-const squareSize = 0.0013;
-const xStart = 45.4800;
-const yStart = -73.6800;
+const zoneSize = 30;
+const squareSize = 0.0020;
+const xStart = 45.4900;
+const yStart = -73.6400;
 
 let x = xStart;
 let y = yStart;
