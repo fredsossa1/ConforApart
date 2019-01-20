@@ -14,12 +14,14 @@ var dataTypes = []; //Ceci contient data_list
 var dataFiles = []; //Ceci contient les fichers de données
 $.getJSON( "https://storage.googleapis.com/confortappart/data_list3.json", function(data){ // Ici on telecharge la data_list
   dataTypes = data;
-  console.log(dataTypes.nElements);
-
+  
+  
   for (i = 0; i < dataTypes.nElements; i++) { // Ici on telecharge l'ensemble des donnees identifiées dans le data_list
     
     $.getJSON(dataTypes.elements[i].url, function(element){
-      dataFiles[i] = element.features;
+      dataFiles[i-1] = element.features;
+      
+      done();
     })
   }
   
@@ -28,7 +30,7 @@ $.getJSON( "https://storage.googleapis.com/confortappart/data_list3.json", funct
 
 // On recupere la grille generee
 let grid = localStorage.getItem("Coord");
-
+grid = JSON.parse(grid);
 
 // On recupere le nombre d'incident relevé dans la case selon le type de données
 function nIncident(idCase, idType) {
@@ -37,8 +39,8 @@ function nIncident(idCase, idType) {
   for (i=0; i < data_size; i++) {
     let dataX = dataFiles[idType][i].geometry.coordinates[0];
     let dataY = dataFiles[idType][i].geometry.coordinates[1];
-    if (dataX > grid.features.geometry.coordinates[0][1] && dataX < grid.features.geometry.coordinates[1][1]) {
-      if (dataY > grid.features.geometry.coordinates[0][0] && dataY < grid.features.geometry.coordinates[3][0]) {
+    if (dataX > grid.features[idCase].geometry.coordinates[0][1] && dataX < grid.features[idCase].geometry.coordinates[1][1]) {
+      if (dataY > grid.features[idCase].geometry.coordinates[0][0] && dataY < grid.features[idCase].geometry.coordinates[3][0]) {
         nFound = nFound =1;
       }
     }
@@ -121,4 +123,13 @@ function adjacentScore(coordinateX, coordinateY, idType) {      // Fonction qui 
     });
   }
 
+}
+
+
+
+function done() {
+  for(i=0; i<grid.features.length; i++)  {
+    let nFound = nIncident(0,0);      
+  }
+  console.log("finished")
 }
