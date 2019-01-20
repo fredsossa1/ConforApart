@@ -1,11 +1,5 @@
 var obj = {
-    type: "Featureblal",
-    crs: {
-        type: "name",
-        properties: {
-            name: "x:y"
-        }
-    },
+    type: "FeatureCollection",
     features: []
 };
 
