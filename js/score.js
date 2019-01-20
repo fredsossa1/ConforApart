@@ -12,15 +12,13 @@ function dataType(name, id, url, scale) {
 // On recupere la liste des donnees a telecharger
 var dataTypes = []; //Ceci contient data_list
 var dataFiles = []; //Ceci contient les fichers de données
-$.getJSON( "https://storage.googleapis.com/confortappart/data_list3.json", function(data){ // Ici on telecharge la data_list
+$.getJSON( "https://storage.googleapis.com/confortappart/data_list4.json", function(data){ // Ici on telecharge la data_list
   dataTypes = data;
   
   for (i = 0; i < dataTypes.nElements; i++) { // Ici on telecharge l'ensemble des donnees identifiées dans le data_list
   
-    $.getJSON(dataTypes.elements[i].url, function(element){
-      console.log(i);
-      dataFiles[i-1] = element.features;
-      
+    $.getJSON(dataTypes.elements[0].url, function(element){
+      dataFiles[0] = element.features;
       done();
     })
   }
@@ -35,13 +33,12 @@ grid = JSON.parse(grid);
 // On recupere le nombre d'incident relevé dans la case selon le type de données
 function nIncident(idCase, idType) {
   let data_size = dataFiles[idType].length;
-  console.log(data_size);
   let nFound = 0;
   for (a=0; a < data_size; a++) {
-    let dataX = dataFiles[idType][a].geometry.coordinates[0];
-    let dataY = dataFiles[idType][a].geometry.coordinates[1];
-    if (dataX > grid.features[idCase].geometry.coordinates[0][1] && dataX < grid.features[idCase].geometry.coordinates[1][1]) {
-      if (dataY > grid.features[idCase].geometry.coordinates[0][0] && dataY < grid.features[idCase].geometry.coordinates[3][0]) {
+    let dataX = dataFiles[idType][a].properties.LATITUDE;
+    let dataY = dataFiles[idType][a].properties.LONGITUDE;
+    if (dataX > grid.features[idCase].geometry.coordinates[0][0][1] && dataX < grid.features[idCase].geometry.coordinates[0][1][1]) {
+      if (dataY > grid.features[idCase].geometry.coordinates[0][0][0] && dataY < grid.features[idCase].geometry.coordinates[0][3][0]) {
         nFound = nFound+1;
       }
     }
@@ -130,8 +127,11 @@ function adjacentScore(coordinateX, coordinateY, idType) {      // Fonction qui 
 
 
 function done() {
+  
   for(P=0; P<grid.features.length; P++)  {
     let nFound = nIncident(P,0);
+    UpdateScore(P,0,nFound);
+    adjacentScore(grid.features[P].properties.coordinateX, grid.features[P].properties.coordinateY, 0);
   }
   
 }
