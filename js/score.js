@@ -46,10 +46,6 @@ function nIncident(idCase, idType) {
   return nFound;
 }
 
-for (i=0; i < grid.features.length; i++) {
-    grid.features[i].geometry.coordinates[0][0]
-};
-
 
 function getSquareById(x, y) {   // Fonction pour trouver un carree depuis son id
   return grid.features.find(feature => feature.properties.coordinateX == x && feature.properties.coordinateY == y);
