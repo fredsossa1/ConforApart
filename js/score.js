@@ -148,6 +148,6 @@ function done() {
   var json = JSON.stringify(grid);
   localStorage.setItem("Grid", json);
 
-  
+  console.log(localStorage.getItem('Coord'));
   console.log(grid);
 }
