@@ -41,6 +41,7 @@ function placerMarqueur(latitude, longitude) {
         position: myCenter
     });
     marker.setMap(map);
+    //map.setCenter(myCenter);
 }
 
 function initialiserMap() {
@@ -102,7 +103,7 @@ function drawSquaresWithColor() {
         }
     });*/
 }
-
+let corresponding_case = 0;
 function searchAddress(address) {
     var queryText = document.getElementById("queryText").value;
     queryText = queryText.replace(/\s+/g, "+");
@@ -121,18 +122,20 @@ function searchAddress(address) {
         let grid = localStorage.getItem("Coord");
         grid = JSON.parse(grid);
 
-        let corresponding_case = 0;
+        
         for (r = 0; r < grid.features.length; r++) {
             if (lat > grid.features[r].geometry.coordinates[0][0][1] && lat < grid.features[r].geometry.coordinates[0][1][1]) {
                 if (long > grid.features[r].geometry.coordinates[0][0][0] && long < grid.features[r].geometry.coordinates[0][3][0]) {
                     corresponding_case = r;
+                    document.querySelector('.scoring').innerHTML = geoJsonData.features[corresponding_case].properties.score;
                     break;
                 }
             }
         }
-        console.log(r);
-
+        
     });
+    console.log(corresponding_case);
+    
 
 
 }
