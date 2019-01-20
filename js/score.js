@@ -46,8 +46,6 @@ function nIncident(idCase, idType) {
   return nFound;
 }
 
-<<<<<<< HEAD
-=======
 function UpdateScore( idCase, idType, triggeredPoints){
   var impactScore;
   for (i = 0; i < dataTypes.nElements; i++) {
@@ -79,7 +77,6 @@ for (i=0; i < grid.features.length; i++) {
     grid.features[i].geometry.coordinates[0][0]
 };
 
->>>>>>> ff8bc3a4e87fd095141ac043b160634ed3b77bb4
 
 function getSquareById(x, y) {   // Fonction pour trouver un carree depuis son id
   return grid.features.find(feature => feature.properties.coordinateX == x && feature.properties.coordinateY == y);
