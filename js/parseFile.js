@@ -56,11 +56,11 @@ function loadPunaisesData() {
 }
 
 function placerMarqueur(latitude, longitude) {
-    map = {
+    /*map = {
         center: new google.maps.LatLng(latitude, longitude),
         zoom: 17,
     };
-    map = new google.maps.Map(document.getElementById("map"), map);
+    map = new google.maps.Map(document.getElementById("map"), map);*/
     var myCenter = new google.maps.LatLng(latitude, longitude);
     var marker = new google.maps.Marker({
         position: myCenter
@@ -73,8 +73,8 @@ function initialiserMap() {
         center: new google.maps.LatLng(45.50364, -73.61503),
         zoom: 14,
         radius: 0.2,
-        //gestureHandling : "none",
-        //zoomControl: false
+        gestureHandling : "none",
+        zoomControl: false
         //mapTypeId: 'satellite'
     };
     map = new google.maps.Map(document.getElementById("map"), map);
