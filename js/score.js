@@ -43,35 +43,39 @@ function nIncident(idCase, idType) {
       }
     }
   }
-  //grid.features.find(feature => feature.properties.coordinateX == x && feature.properties.coordinateY == y);
   return nFound;
 }
 
 function UpdateScore( idCase, idType, triggeredPoints){
   var impactScore;
   for (b = 0; b < dataTypes.nElements; b++) {
-   if(dataTypes.elements[b].name==idType){
+   if(dataTypes.elements[b].id == idType){
       if(triggeredPoints >= dataTypes.elements[b].scale[0].trigger_point){
         impactScore = dataTypes.elements[b].scale[0].impact;
+        grid.features[idCase].properties.colour = "red";
+        console.log("FUCK IM RED");
       }
         
-      if(triggeredPoints >= dataTypes.elements[b].scale[1].trigger_point){
+      if(triggeredPoints >= dataTypes.elements[b].scale[1].trigger_point && triggeredPoints < dataTypes.elements[b].scale[0].trigger_point){
         impactScore = dataTypes.elements[b].scale[1].impact;
+        grid.features[idCase].properties.colour = "orange";
+        console.log("i am orange");
       }
 
-      if(triggeredPoints >= dataTypes.elements[i].scale[2].trigger_point){
+      if(triggeredPoints >= dataTypes.elements[b].scale[2].trigger_point && triggeredPoints < dataTypes.elements[b].scale[1].trigger_point){
         impactScore = dataTypes.elements[b].scale[2].impact;
+        console.log("i am green");
       }
    }
   }
   
 
-  $.getJSON( "https://storage.googleapis.com/confortappart/generation_map.geojson", function(data){
+  /*$.getJSON( "https://storage.googleapis.com/confortappart/generation_map.geojson", function(data){
     townSquares = data;
     console.log(townSquares);
     townSquares.features[idCase].properties.score = impactScore;
-  });
-
+  });*/
+  grid.features[idCase].properties.score = impactScore;
 }
 
 
@@ -118,13 +122,13 @@ function adjacentScore(coordinateX, coordinateY, idType) {      // Fonction qui 
   if (square.properties.colour == "red") {
     getNeighbor(redRadius, square.properties.coordinateX, square.properties.coordinateY)
     .forEach(neighbour => {
-      neighbour.properties.colour = "orange";
+      if(neighbour.properties.colour != "red") {
+        neighbour.properties.colour = "orange";
+      }
     });
   }
 
 }
-
-
 
 function done() {
   
@@ -133,5 +137,5 @@ function done() {
     UpdateScore(P,0,nFound);
     adjacentScore(grid.features[P].properties.coordinateX, grid.features[P].properties.coordinateY, 0);
   }
-  
+  console.log(grid);
 }

@@ -204,6 +204,20 @@ function searchAddress(address) {
         var long = data.results[0].geometry.location.lng;
 
         placerMarqueur(lat, long);
+        let grid = localStorage.getItem("Coord");
+        grid = JSON.parse(grid);
+
+        let corresponding_case = 0;
+        for (r=0; r < grid.features.length; r++) {
+            if (lat > grid.features[r].geometry.coordinates[0][0][1] && lat < grid.features[r].geometry.coordinates[0][1][1]) {
+              if (long > grid.features[r].geometry.coordinates[0][0][0] && long < grid.features[r].geometry.coordinates[0][3][0]) {
+                corresponding_case = r;
+                break;
+              }
+            }
+          }
+        console.log(r);
+
     });
 
 
