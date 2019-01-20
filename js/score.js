@@ -15,10 +15,10 @@ var dataFiles = []; //Ceci contient les fichers de données
 $.getJSON( "https://storage.googleapis.com/confortappart/data_list3.json", function(data){ // Ici on telecharge la data_list
   dataTypes = data;
   
-  
   for (i = 0; i < dataTypes.nElements; i++) { // Ici on telecharge l'ensemble des donnees identifiées dans le data_list
-    
+  
     $.getJSON(dataTypes.elements[i].url, function(element){
+      console.log(i);
       dataFiles[i-1] = element.features;
       
       done();
@@ -35,33 +35,35 @@ grid = JSON.parse(grid);
 // On recupere le nombre d'incident relevé dans la case selon le type de données
 function nIncident(idCase, idType) {
   let data_size = dataFiles[idType].length;
+  console.log(data_size);
   let nFound = 0;
-  for (i=0; i < data_size; i++) {
-    let dataX = dataFiles[idType][i].geometry.coordinates[0];
-    let dataY = dataFiles[idType][i].geometry.coordinates[1];
+  for (a=0; a < data_size; a++) {
+    let dataX = dataFiles[idType][a].geometry.coordinates[0];
+    let dataY = dataFiles[idType][a].geometry.coordinates[1];
     if (dataX > grid.features[idCase].geometry.coordinates[0][1] && dataX < grid.features[idCase].geometry.coordinates[1][1]) {
       if (dataY > grid.features[idCase].geometry.coordinates[0][0] && dataY < grid.features[idCase].geometry.coordinates[3][0]) {
-        nFound = nFound =1;
+        nFound = nFound+1;
       }
     }
   }
+  //grid.features.find(feature => feature.properties.coordinateX == x && feature.properties.coordinateY == y);
   return nFound;
 }
 
 function UpdateScore( idCase, idType, triggeredPoints){
   var impactScore;
-  for (i = 0; i < dataTypes.nElements; i++) {
-   if(dataTypes.elements[i].name==idType){
-      if(triggeredPoints >= dataTypes.elements[i].scale[0].trigger_point){
-        impactScore = dataTypes.elements[i].scale[0].impact;
+  for (b = 0; b < dataTypes.nElements; b++) {
+   if(dataTypes.elements[b].name==idType){
+      if(triggeredPoints >= dataTypes.elements[b].scale[0].trigger_point){
+        impactScore = dataTypes.elements[b].scale[0].impact;
       }
         
-      if(triggeredPoints >= dataTypes.elements[i].scale[1].trigger_point){
-        impactScore = dataTypes.elements[i].scale[1].impact;
+      if(triggeredPoints >= dataTypes.elements[b].scale[1].trigger_point){
+        impactScore = dataTypes.elements[b].scale[1].impact;
       }
 
       if(triggeredPoints >= dataTypes.elements[i].scale[2].trigger_point){
-        impactScore = dataTypes.elements[i].scale[2].impact;
+        impactScore = dataTypes.elements[b].scale[2].impact;
       }
    }
   }
@@ -83,10 +85,10 @@ function getSquareById(x, y) {   // Fonction pour trouver un carree depuis son i
 function getNeighbor(radius, positionX, positionY) {   // prise des voisin d'une case en fonction du radius
   let neighbour = [];
 
-  for(i = -radius; i <= radius; i++) {
-    for(j = -radius; j <= radius; j++) {
-      if(i != positionX && j != positionY) {
-        neighbour.push(getSquareById(positionX + i,positionY + j));
+  for(c = -radius; c <= radius; c++) {
+    for(d = -radius; d <= radius; d++) {
+      if(c != positionX && d != positionY) {
+        neighbour.push(getSquareById(positionX + c,positionY + d));
       }
     }
   }
@@ -128,8 +130,8 @@ function adjacentScore(coordinateX, coordinateY, idType) {      // Fonction qui 
 
 
 function done() {
-  for(i=0; i<grid.features.length; i++)  {
-    let nFound = nIncident(0,0);      
+  for(P=0; P<grid.features.length; P++)  {
+    let nFound = nIncident(P,0);
   }
-  console.log("finished")
+  
 }
