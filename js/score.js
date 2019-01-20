@@ -9,25 +9,45 @@ function dataType(name, id, url, scale) {
 }
 */
 
-// On recupere la liste des donnes a telecharger
-var dataTypes = [];
-var dataFiles = [];
-$.getJSON( "https://storage.googleapis.com/confortappart/data_list3.json", function( data){
+// On recupere la liste des donnees a telecharger
+var dataTypes = []; //Ceci contient data_list
+var dataFiles = []; //Ceci contient les fichers de données
+$.getJSON( "https://storage.googleapis.com/confortappart/data_list3.json", function(data){
   dataTypes = data;
-  console.log(dataTypes);
+  console.log(dataTypes.nElements);
+
   for (i = 0; i < dataTypes.nElements; i++) {
-    dataFiles.push(dataTypes.elements[i].url);
-  } 
-  console.log(dataFiles[0]);
+    
+    $.getJSON(dataTypes.elements[i].url, function(element){
+      console.log("hey");
+      dataFiles[i] = element.features;
+      
+    })
+  }
+  
 });
+
+
+
+
+
 
 // On recupere la grille generee
 let grid = localStorage.getItem("Coord");
 
 
+// On recupere le nombre d'incident relevé dans la case selon le type de données
+function isIn(idCase, idType) {
+  let data_size = dataFiles.elements.length;
+  let nFound = 0;
+  for (i=0; i < data_size; i++) {
+  }
+}
+
 for (i=0; i < grid.features.length; i++) {
     grid.features[i].geometry.coordinates[0][0]
 };
+
 
 function getSquareById(x, y) {   // Fonction pour trouver un carree depuis son id
   return grid.features.find(feature => feature.properties.coordinateX == x && feature.properties.coordinateY == y);
