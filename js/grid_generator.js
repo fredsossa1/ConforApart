@@ -3,6 +3,7 @@ var obj = {
     features: []
 };
 
+// DEclaration des variables
 const zoneSize = 30;
 const squareSize = 0.0020;
 const xStart = 45.4900;
