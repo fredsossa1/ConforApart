@@ -73,7 +73,7 @@ function initialiserMap() {
         center: new google.maps.LatLng(45.50364, -73.61503),
         zoom: 14,
         radius: 0.2,
-        gestureHandling : "none",
+        gestureHandling: "none",
         zoomControl: false
         //mapTypeId: 'satellite'
     };
@@ -100,6 +100,95 @@ function eqfeed_callback() {
 
 }
 
+function drawSquaresWithColor() {
+    var geoJsonData = {
+        "type": "FeatureCollection",
+        "features": [{
+                "type": "Feature",
+                "properties": {
+                    "coordinateX": 0,
+                    "coordinateY": 0,
+                    "colour": "yellow   ",
+                    "score": 0
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                -73.64,
+                                45.49
+                            ],
+                            [
+                                -73.64,
+                                45.492
+                            ],
+                            [
+                                -73.638,
+                                45.492
+                            ],
+                            [
+                                -73.638,
+                                45.49
+                            ],
+                            [
+                                -73.64,
+                                45.49
+                            ]
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "Feature",
+                "properties": {
+                    "coordinateX": 0,
+                    "coordinateY": 1,
+                    "colour": "red",
+                    "score": 0
+                },
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                -73.64,
+                                45.492
+                            ],
+                            [
+                                -73.64,
+                                45.494
+                            ],
+                            [
+                                -73.638,
+                                45.494
+                            ],
+                            [
+                                -73.638,
+                                45.492
+                            ],
+                            [
+                                -73.64,
+                                45.492
+                            ]
+                        ]
+                    ]
+                }
+            }
+        ]
+    };
+    map.data.addGeoJson(geoJsonData);
+
+    map.data.setStyle(function (feature) {
+        var color = feature.getProperty('colour');
+        var score = feature.getProperty('score');
+        return {
+            fillColor: color,
+            strokeWeight: 1
+        }
+    });
+}
+
 function searchAddress(address) {
     var queryText = document.getElementById("queryText").value;
     queryText = queryText.replace(/\s+/g, "+");
@@ -116,8 +205,8 @@ function searchAddress(address) {
 
         placerMarqueur(lat, long);
     });
-    
-   
+
+
 }
 
 $(document).ready(function () {
@@ -132,6 +221,8 @@ $(document).ready(function () {
         var getval = ($("#queryText").val());
         searchAddress(getval);
     });
+
+    drawSquaresWithColor();
 
 
 });
