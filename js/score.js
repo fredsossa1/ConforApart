@@ -46,6 +46,40 @@ function nIncident(idCase, idType) {
   return nFound;
 }
 
+<<<<<<< HEAD
+=======
+function UpdateScore( idCase, idType, triggeredPoints){
+  var impactScore;
+  for (i = 0; i < dataTypes.nElements; i++) {
+   if(dataTypes.elements[i].name==idType){
+      if(triggeredPoints >= dataTypes.elements[i].scale[0].trigger_point){
+        impactScore = dataTypes.elements[i].scale[0].impact;
+      }
+        
+      if(triggeredPoints >= dataTypes.elements[i].scale[1].trigger_point){
+        impactScore = dataTypes.elements[i].scale[1].impact;
+      }
+
+      if(triggeredPoints >= dataTypes.elements[i].scale[2].trigger_point){
+        impactScore = dataTypes.elements[i].scale[2].impact;
+      }
+   }
+  }
+  
+
+  $.getJSON( "https://storage.googleapis.com/confortappart/generation_map.geojson", function(data){
+    townSquares = data;
+    console.log(townSquares);
+    townSquares.features[idCase].properties.score = impactScore;
+  });
+
+}
+
+for (i=0; i < grid.features.length; i++) {
+    grid.features[i].geometry.coordinates[0][0]
+};
+
+>>>>>>> ff8bc3a4e87fd095141ac043b160634ed3b77bb4
 
 function getSquareById(x, y) {   // Fonction pour trouver un carree depuis son id
   return grid.features.find(feature => feature.properties.coordinateX == x && feature.properties.coordinateY == y);
