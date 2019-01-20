@@ -225,6 +225,8 @@ function searchAddress(address) {
 
 $(document).ready(function () {
 
+    console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOoo");
+
     initialiserMap();
     //placerMarqueur(null, null);
     loadPunaisesData();
