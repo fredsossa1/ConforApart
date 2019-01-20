@@ -41,6 +41,7 @@ function placerMarqueur(latitude, longitude) {
         position: myCenter
     });
     marker.setMap(map);
+    //map.setCenter(myCenter);
 }
 
 function initialiserMap() {
