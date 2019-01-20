@@ -29,11 +29,11 @@ for (i = 0; i < zoneSize; i++) {
                 type: "Polygon",
                 coordinates: [
                     [
-                        [x,y],
-                        [xPlus1,y],
-                        [xPlus1,yPlus1],
-                        [x,yPlus1],
-                        [x,y]
+                        [y,x],
+                        [y,xPlus1],
+                        [yPlus1,xPlus1],
+                        [yPlus1,x],
+                        [y,x]
                     ]
                 ]
             }
