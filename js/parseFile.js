@@ -1,12 +1,12 @@
-var quadrillageSourceLink = "http://donnees.ville.montreal.qc.ca/dataset/e160983c-f5d2-49ec-9b81-d0f6fb66518a/resource/d05e6306-9537-40cb-b995-1d8830febe19/download/sqrc_500.geojson";
-var punaiseSourceLink = "http://donnees.ville.montreal.qc.ca/dataset/49ff9fe4-eb30-4c1a-a30a-fca82d4f5c2f/resource/5a54bddd-7046-45da-83cb-90ee71edce91/download/declarations-exterminations-punaises-de-lit.geojson";
+//var quadrillageSourceLink = "http://donnees.ville.montreal.qc.ca/dataset/e160983c-f5d2-49ec-9b81-d0f6fb66518a/resource/d05e6306-9537-40cb-b995-1d8830febe19/download/sqrc_500.geojson";
+var punaiseSourceLink = "https://storage.googleapis.com/confortappart/declarations-exterminations-punaises-de-lit.geojson";
 
 var quadrillagePoints = [];
 var punaisePoints = [];
 var heatmapData = [];
 var map;
 
-function loadQuadrillageData() {
+/*function loadQuadrillageData() {
     //Récupération des données du serveur
     $.get(quadrillageSourceLink).then((response) => {
 
@@ -19,7 +19,7 @@ function loadQuadrillageData() {
         .fail((error) => {
             console.log("Error loading file");
         });
-}
+}*/
 
 function loadPunaisesData() {
     $.get(punaiseSourceLink).then((response) => {
@@ -71,30 +71,67 @@ function placerMarqueur(latitude, longitude) {
 function initialiserMap() {
     map = {
         center: new google.maps.LatLng(45.50364, -73.61503),
-        zoom: 13,
+        zoom: 14,
         radius: 0.2,
+        //gestureHandling : "none",
+        //zoomControl: false
         //mapTypeId: 'satellite'
     };
     map = new google.maps.Map(document.getElementById("map"), map);
 
+    /* var request = {
+         query: 'Museum of Contemporary Art Australia',
+         fields: ['photos', 'formatted_address', 'name', 'rating', 'opening_hours', 'geometry'],    
+       };
+     
+       var service = new google.maps.places.PlacesService(map);
+       service.findPlaceFromQuery(request, callMe);*/
+
+
 }
 
-function eqfeed_callback() {   
+function eqfeed_callback() {
 
     var heatmap = new google.maps.visualization.HeatmapLayer({
         data: heatmapData,
         dissipating: false,
         map: map
     });
-    //console.log("NAAAAAh");
 
+}
+
+function searchAddress(address) {
+    var queryText = document.getElementById("queryText").value;
+    queryText = queryText.replace(/\s+/g, "+");
+    var finalQuery = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+    finalQuery = finalQuery.concat(queryText, "&key=AIzaSyDRCGXHP810yZ8cXGSTnAEHANDbdY6HNP4");
+
+    console.log(finalQuery);
+
+    $.getJSON(finalQuery, function (data) {
+        dataTypes = data;
+
+        var lat = data.results[0].geometry.location.lat;
+        var long = data.results[0].geometry.location.lng;
+
+        placerMarqueur(lat, long);
+    });
+    
+   
 }
 
 $(document).ready(function () {
 
     initialiserMap();
     //placerMarqueur(null, null);
-    //loadQuadrillageData();
     loadPunaisesData();
     eqfeed_callback();
+
+    var submitButton = $("#searchButton");
+    submitButton.click(function () {
+        var getval = ($("#queryText").val());
+        searchAddress(getval);
+    });
+
+
 });
