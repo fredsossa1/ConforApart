@@ -23,7 +23,8 @@ for (i = 0; i < zoneSize; i++) {
         obj.features.push({
             type: "Feature",
             properties: {
-                coordinates: i+":"+j,
+                coordinateX: i,
+                coordinateY: j,
                 colour: "green",
                 score: 0,
             },
