@@ -66,11 +66,11 @@ function UpdateScore( idCase, idType, triggeredPoints){
   }
   
 
-  $.getJSON( "https://storage.googleapis.com/confortappart/generation_map.geojson", function(data){
+  /*$.getJSON( "https://storage.googleapis.com/confortappart/generation_map.geojson", function(data){
     townSquares = data;
-    console.log(townSquares);
-    townSquares.features[idCase].properties.score = impactScore;
-  });
+    console.log(townSquares);*/
+  grid.features[idCase].properties.score = impactScore;
+  //});
 
 }
 
@@ -124,14 +124,12 @@ function adjacentScore(coordinateX, coordinateY, idType) {      // Fonction qui 
 
 }
 
-
-
-function done() {
+function exec() {
   
-  for(P=0; P<grid.features.length; P++)  {
-    let nFound = nIncident(P,0);
-    UpdateScore(P,0,nFound);
-    adjacentScore(grid.features[P].properties.coordinateX, grid.features[P].properties.coordinateY, 0);
+  for(e = 0; e < zoneSize; e++) {
+    for(f = 0; f < zoneSize; f++) {
+      
+    }
   }
   
 }
