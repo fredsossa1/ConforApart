@@ -2,23 +2,23 @@
 var dataTypes = []; //Ceci contient data_list
 var dataFiles = []; //Ceci contient les fichers de données
 
-$.getJSON( "https://storage.googleapis.com/confortappart/data_list7.json", function(data){ // Ici on telecharge la data_list
+$.getJSON( "https://storage.googleapis.com/confortappart/data_list4.json", function(data){ // Ici on telecharge la data_list
   dataTypes = data;
     $.getJSON(dataTypes.elements[0].url, function(element){
       dataFiles[0] = element.features;
       
-      suite();
+      done();
     })
   
 });
 
-function suite() {
+/*function suite() {
   $.getJSON(dataTypes.elements[1].url, function(element){
     dataFiles[1] = element.features;
     console.log(dataFiles[1]);
     done();
   })
-}
+}*/
 
 
 // On recupere la grille generee
@@ -77,11 +77,13 @@ function getSquareById(x, y) {   // Fonction pour trouver un carree depuis son i
 
 function getNeighbor(radius, positionX, positionY) {   // prise des voisin d'une case en fonction du radius
   let neighbour = [];
-
+  radius++;
   for(c = -radius; c <= radius; c++) {
     for(d = -radius; d <= radius; d++) {
       if(c != positionX && d != positionY) {
-        neighbour.push(getSquareById(positionX + c,positionY + d));
+        if(positionX + c >= 0 && positionX + c < 30 && positionY + d >= 0 && positionY + d < 30){
+          neighbour.push(getSquareById(positionX + c,positionY + d));
+        }
       }
     }
   }
@@ -99,6 +101,11 @@ function adjacentScore(coordinateX, coordinateY, idType) {      // Fonction qui 
     return;
   }
   
+  /*for(e = 0; e < dataTypes.nElements; e++) {
+
+  }*/
+  
+  
   let type = dataTypes.elements.find( element => element.id == idType);
   let redRadius = type.scale.find(s => s.color == "red").radius;
   let orangeRadius = type.scale.find(s => s.color == "orange").radius;
@@ -114,8 +121,10 @@ function adjacentScore(coordinateX, coordinateY, idType) {      // Fonction qui 
   if (square.properties.colour == "red") {
     getNeighbor(redRadius, square.properties.coordinateX, square.properties.coordinateY)
     .forEach(neighbour => {
+      console.log(neighbour.properties.colour);
       if(neighbour.properties.colour != "red") {
         neighbour.properties.colour = "orange";
+
       }
     });
   }
@@ -129,16 +138,16 @@ function done() {
     UpdateScore(P,0,nFound);
     adjacentScore(grid.features[P].properties.coordinateX, grid.features[P].properties.coordinateY, 0);
   }
-
+  /*
   for(P=0; P<grid.features.length; P++)  {
     let nFound = nIncident(P,1);
     UpdateScore(P,1,nFound);
     adjacentScore(grid.features[P].properties.coordinateX, grid.features[P].properties.coordinateY, 1);
-  }
+  }*/
 
   var json = JSON.stringify(grid);
   localStorage.setItem("Grid", json);
 
   
-  //console.log(grid);
+  console.log(grid);
 }
