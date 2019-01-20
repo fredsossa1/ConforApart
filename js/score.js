@@ -46,6 +46,33 @@ function nIncident(idCase, idType) {
   return nFound;
 }
 
+function UpdateScore( idCase, idType, triggeredPoints){
+  var impactScore;
+  for (i = 0; i < dataTypes.nElements; i++) {
+   if(dataTypes.elements[i].name==idType){
+      if(triggeredPoints >= dataTypes.elements[i].scale[0].trigger_point){
+        impactScore = dataTypes.elements[i].scale[0].impact;
+      }
+        
+      if(triggeredPoints >= dataTypes.elements[i].scale[1].trigger_point){
+        impactScore = dataTypes.elements[i].scale[1].impact;
+      }
+
+      if(triggeredPoints >= dataTypes.elements[i].scale[2].trigger_point){
+        impactScore = dataTypes.elements[i].scale[2].impact;
+      }
+   }
+  }
+  
+
+  $.getJSON( "https://storage.googleapis.com/confortappart/generation_map.geojson", function(data){
+    townSquares = data;
+    console.log(townSquares);
+    townSquares.features[idCase].properties.score = impactScore;
+  });
+
+}
+
 for (i=0; i < grid.features.length; i++) {
     grid.features[i].geometry.coordinates[0][0]
 };
