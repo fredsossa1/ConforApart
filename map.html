@@ -4,25 +4,27 @@
 <html>
 
 <head>
-    <!--JQUERY-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="js/parseFile.js"></script>
+  <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRCGXHP810yZ8cXGSTnAEHANDbdY6HNP4&libraries=visualization,places">
+  </script>
+  <!--JQUERY-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="js/parseFile.js"></script>
 
-    <!--BOOTSTRAP-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!--BOOTSTRAP-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!--FONT AWESOME-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Rectangles</title>
-    <style>
-        /* Always set the map height explicitly to define the size of the div
+  <!--FONT AWESOME-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Rectangles</title>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
         height: 100%;
@@ -35,8 +37,8 @@
       }
     </style>
 
-    <style>
-        html, body, #map { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+  <style>
+    html, body, #map { height: 100%; margin: 0; padding: 0; overflow: hidden; }
           .nicebox {
             position: absolute;
             text-align: center;
@@ -94,28 +96,27 @@
 
 <body>
 
-  
-      <input type="text" id="queryText" placeholder="Enter your Adress">
-      <button id="searchButton">SEARCH</button>
-  
-  
 
-    <div class="nicebox">
-        <div>
-            <select id="census-variable">
-                <option value="https://storage.googleapis.com/mapsdevsite/json/DP02_0066PE">Punaises</option>
-                <option value="https://storage.googleapis.com/mapsdevsite/json/DP05_0017E">Cliniques</option>
-            </select>
-          </div>
-    </div>
-    <div id="data-box" class="nicebox">
-        <label id="data-label" for="data-value"></label>
-        <span id="data-value"></span>
-    </div>
+  <input type="text" id="queryText" placeholder="Enter your Adress">
+  <button id="searchButton">SEARCH</button>
 
-    <div id="map"></div>
-    <script async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRCGXHP810yZ8cXGSTnAEHANDbdY6HNP4&libraries=visualization,places">
-    </script>
+
+
+  <div class="nicebox">
+    <div>
+      <select id="census-variable">
+        <option value="https://storage.googleapis.com/mapsdevsite/json/DP02_0066PE">Punaises</option>
+        <option value="https://storage.googleapis.com/mapsdevsite/json/DP05_0017E">Cliniques</option>
+      </select>
+    </div>
+  </div>
+  <div id="data-box" class="nicebox">
+    <label id="data-label" for="data-value"></label>
+    <span id="data-value"></span>
+  </div>
+
+  <div id="map"></div>
+
 </body>
 
 </html>
