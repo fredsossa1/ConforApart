@@ -1,29 +1,24 @@
-
-// Definition d'un objet type de donneées
-/*
-function dataType(name, id, url, scale) {
-    this.name = name;
-    this.id = id;
-    this.url = url;
-    this.scale = scale;
-}
-*/
-
 // On recupere la liste des donnees a telecharger
 var dataTypes = []; //Ceci contient data_list
 var dataFiles = []; //Ceci contient les fichers de données
-$.getJSON( "https://storage.googleapis.com/confortappart/data_list4.json", function(data){ // Ici on telecharge la data_list
+
+$.getJSON( "https://storage.googleapis.com/confortappart/data_list7.json", function(data){ // Ici on telecharge la data_list
   dataTypes = data;
-  
-  for (i = 0; i < dataTypes.nElements; i++) { // Ici on telecharge l'ensemble des donnees identifiées dans le data_list
-  
     $.getJSON(dataTypes.elements[0].url, function(element){
       dataFiles[0] = element.features;
-      done();
+      
+      suite();
     })
-  }
   
 });
+
+function suite() {
+  $.getJSON(dataTypes.elements[1].url, function(element){
+    dataFiles[1] = element.features;
+    console.log(dataFiles[1]);
+    done();
+  })
+}
 
 
 // On recupere la grille generee
@@ -135,10 +130,15 @@ function done() {
     adjacentScore(grid.features[P].properties.coordinateX, grid.features[P].properties.coordinateY, 0);
   }
 
+  for(P=0; P<grid.features.length; P++)  {
+    let nFound = nIncident(P,1);
+    UpdateScore(P,1,nFound);
+    adjacentScore(grid.features[P].properties.coordinateX, grid.features[P].properties.coordinateY, 1);
+  }
+
   var json = JSON.stringify(grid);
   localStorage.setItem("Grid", json);
 
-  console.log(localStorage.getItem('Grid'));
   
   //console.log(grid);
 }
