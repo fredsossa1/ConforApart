@@ -22,6 +22,20 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="js/parseFile.js"></script>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+  #map {
+    height: 100%;
+  }
+  /* Optional: Makes the sample page fill the window. */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
 </head>
 
 <body class="shards-landing-page--1">
@@ -71,17 +85,18 @@
     <!-- / Inner Wrapper -->
   </div>
   <!-- / Welcome Section -->
+    <!-- Our Services Section -->
+    <div id="MYMAP" class="our-services section py-4">
 
-  <!-- Our Services Section -->
-  <div id="MYMAP" class="our-services section py-4">
+      <input type="text" id="queryText" placeholder="Entrez votre adresse"><br>
+      <button id="searchButton">SEARCH</button>
+      <div id="map"></div>
+    
 
-    <input type="text" id="queryText" placeholder="Enter your Adress"><br>
-    <button id="searchButton">SEARCH</button>
-    <div id="map"></div>
-   
-
-  </div>
+    </div>
   <!-- / Features -->
+
+
 
   <div class="features py-4 mb-4">
     <div class="container">
