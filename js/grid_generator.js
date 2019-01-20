@@ -23,7 +23,9 @@ for (i = 0; i < zoneSize; i++) {
         obj.features.push({
             type: "Feature",
             properties: {
-                coordinates: i+":"+j
+                coordinates: i+":"+j,
+                colour: "green",
+                score: 0,
             },
             geometry: {
                 type: "Polygon",
